@@ -22,7 +22,9 @@ namespace MagicVilla_VillaAPI.Controllers
             return Ok(VillaStore.VillaList);
         }
 
-        [HttpGet("{id:int}")] // to specify the type of id {id:int} and show there is an input
+        // Add Name to the getById to use it when we post data and
+        // redirect to the posted id
+        [HttpGet("{id:int}",Name ="GetVilla")] // to specify the type of id {id:int} and show there is an input
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,11 +45,19 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<VillaDTO> CreateVilla([FromBody] VillaDTO villaDTO)
         {
+            // To check the state 
+            //used to check for examle the Name is required
+            // or to check name length data annoation for the model
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest();
+            //}
+
             if (villaDTO == null)
             {
                 return BadRequest();
@@ -61,7 +71,8 @@ namespace MagicVilla_VillaAPI.Controllers
             //to retrieve last ID in the list
             villaDTO.Id = VillaStore.VillaList.OrderByDescending(v => v.Id).FirstOrDefault().Id + 1;
             VillaStore.VillaList.Add(villaDTO);
-            return Ok(villaDTO);
+            //Add route to the new posted value
+            return CreatedAtRoute("GetVilla", new {id = villaDTO.Id}, villaDTO);
         }
     }
 }
