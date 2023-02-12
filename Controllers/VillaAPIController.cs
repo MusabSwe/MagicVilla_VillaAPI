@@ -29,17 +29,39 @@ namespace MagicVilla_VillaAPI.Controllers
         public ActionResult<VillaDTO> GetVilla(int id)
         {
             var villa = VillaStore.VillaList.FirstOrDefault(v => v.Id == id);
-            if(id == 0)
+            if (id == 0)
             {
                 // response = 400
                 return BadRequest();
             }
-            if(villa == null)
+            if (villa == null)
             {
                 // response = 404
                 return NotFound();
             }
             return Ok(villa);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<VillaDTO> CreateVilla([FromBody] VillaDTO villaDTO)
+        {
+            if (villaDTO == null)
+            {
+                return BadRequest();
+            }
+            //when we creating Vill the Id should be zero
+            // no input for the ID
+            if (villaDTO.Id > 0)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            //to retrieve last ID in the list
+            villaDTO.Id = VillaStore.VillaList.OrderByDescending(v => v.Id).FirstOrDefault().Id + 1;
+            VillaStore.VillaList.Add(villaDTO);
+            return Ok(villaDTO);
         }
     }
 }
