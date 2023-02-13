@@ -10,11 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 // We use Log to create file for logging Villa Endpoint result
 // we install serilog.aspNetCore & serilog.sinks.file
 // from nuget package manager
-Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
-    .WriteTo.File("log/villaLogs.txt",rollingInterval: RollingInterval.Day).CreateLogger();
+//Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+//    .WriteTo.File("log/villaLogs.txt",rollingInterval: RollingInterval.Day).CreateLogger();
 
-// to use the instlled package
-builder.Host.UseSerilog();
+//// to use the instlled package
+//builder.Host.UseSerilog();
 
 builder.Services.AddControllers(options =>
 {
