@@ -1,3 +1,4 @@
+using MagicVilla_VillaAPI.Logging;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,12 @@ builder.Services.AddControllers(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// There 3 types of servise that catogrize depends on the services life
+//1. AddSingleton --> This created when the application starte and that object will still running every time the requests an implementation (The longest one)
+//2. AddScooped --> For every request it will create a new object and provide that where it is requested
+//3. AddTransient --> let is say even in one request if that object is accessed like 10 times so, it will create 10 differnrt objects
+// we implement the below code to implement log for the endpoints
+builder.Services.AddSingleton<ILogging, Logging>();
 
 var app = builder.Build();
 

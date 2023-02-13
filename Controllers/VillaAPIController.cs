@@ -1,4 +1,5 @@
 ﻿using MagicVilla_VillaAPI.Data;
+using MagicVilla_VillaAPI.Logging;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.dto;
 using Microsoft.AspNetCore.JsonPatch;
@@ -15,8 +16,8 @@ namespace MagicVilla_VillaAPI.Controllers
         // to log here we should use Dependency Injection
         // To create logging only need to create 
         // a constructor 
-        private readonly ILogger<VillaAPIController> _logger;
-        public VillaAPIController(ILogger<VillaAPIController> logger)
+        private readonly ILogging _logger;
+        public VillaAPIController(ILogging logger)
         {
             _logger = logger;
         }
@@ -30,7 +31,7 @@ namespace MagicVilla_VillaAPI.Controllers
         // ActionResult used to return multiple types
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
-            _logger.LogInformation("Getting all villas");
+            _logger.Log("Getting all villas","");
             return Ok(VillaStore.VillaList);
         }
 
@@ -45,7 +46,7 @@ namespace MagicVilla_VillaAPI.Controllers
             var villa = VillaStore.VillaList.FirstOrDefault(v => v.Id == id);
             if (id == 0)
             {
-                _logger.LogError("Get Villa Error with Id: " + id);
+                _logger.Log("Get Villa Error with Id: " + id, "Error");
                 // response = 400
                 return BadRequest();
             }
