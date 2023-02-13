@@ -1,13 +1,25 @@
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// AddNewtonsoftJson() is a package to implement patch request
 
+// AddNewtonsoftJson() is a package to implement patch 
 // AddXmlDataContractSerializerFormatters() means accept xml format
+
+// We use Log to create file for logging Villa Endpoint result
+// we install serilog.aspNetCore & serilog.sinks.file
+// from nuget package manager
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
+    .WriteTo.File("log/villaLogs.txt",rollingInterval: RollingInterval.Day).CreateLogger();
+
+// to use the instlled package
+builder.Host.UseSerilog();
+
 builder.Services.AddControllers(options =>
 {
     // means only accept JSON format in the API
-    options.ReturnHttpNotAcceptable = true;
+    //options.ReturnHttpNotAcceptable = true;
 
 }).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 
