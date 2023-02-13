@@ -1,6 +1,7 @@
 ﻿using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.dto;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MagicVilla_VillaAPI.Controllers
@@ -11,6 +12,16 @@ namespace MagicVilla_VillaAPI.Controllers
     [ApiController]
     public class VillaAPIController : ControllerBase
     {
+        // to log here we should use Dependency Injection
+        // To create logging only need to create 
+        // a constructor 
+        private readonly ILogger<VillaAPIController> _logger;
+        public VillaAPIController(ILogger<VillaAPIController> logger)
+        {
+            _logger = logger;
+        }
+
+
         //Down we create the Endpoints
         //an endpoint is typically a uniform resource locator (URL)
         //that provides the location of a resource on the server.
@@ -19,6 +30,7 @@ namespace MagicVilla_VillaAPI.Controllers
         // ActionResult used to return multiple types
         public ActionResult<IEnumerable<VillaDTO>> GetVillas()
         {
+            _logger.LogInformation("Getting all villas");
             return Ok(VillaStore.VillaList);
         }
 
@@ -33,6 +45,7 @@ namespace MagicVilla_VillaAPI.Controllers
             var villa = VillaStore.VillaList.FirstOrDefault(v => v.Id == id);
             if (id == 0)
             {
+                _logger.LogError("Get Villa Error with Id" + id);
                 // response = 400
                 return BadRequest();
             }
@@ -117,9 +130,35 @@ namespace MagicVilla_VillaAPI.Controllers
             }
             villa.Name = villaDTO.Name;
             villa.Occupancy = villaDTO.Occupancy;
-            villa.Sqft= villaDTO.Sqft;
+            villa.Sqft = villaDTO.Sqft;
             return NoContent();
         }
 
+        [HttpPatch("{id:int}", Name = "UpdatePartialVilla")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaDTO> patchDTO)
+        {
+            if (patchDTO == null || id == 0)
+            {
+                return BadRequest();
+            }
+            //find which villa wants to update
+            var villa = VillaStore.VillaList.FirstOrDefault(v => v.Id == id);
+            if (villa == null)
+            {
+                return NotFound();
+            }
+            // Apply partial update for the villa
+            // checks the data annotation for VillaDTO class
+            //so the down method first param --> for the updated villa
+            // second param --> to checks data annotation such as [Required]
+            patchDTO.ApplyTo(villa, ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return NoContent();
+        }
     }
 }

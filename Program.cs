@@ -1,8 +1,16 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// AddNewtonsoftJson() is a package to implement patch request
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+// AddXmlDataContractSerializerFormatters() means accept xml format
+builder.Services.AddControllers(options =>
+{
+    // means only accept JSON format in the API
+    options.ReturnHttpNotAcceptable = true;
+
+}).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
