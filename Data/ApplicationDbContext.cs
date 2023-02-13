@@ -6,10 +6,11 @@ namespace MagicVilla_VillaAPI.Data
     //DbContext is class in the EntityFrameworkCore package
     public class ApplicationDbContext : DbContext
     {
+        // used to configure EF core with any .Net Application
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) 
+            : base(options)
         {
-                
+
         }
         // used to create the table
         // in the SQL Server and the name
