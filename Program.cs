@@ -32,7 +32,7 @@ builder.Services.AddSwaggerGen();
 //2. AddScooped --> For every request it will create a new object and provide that where it is requested
 //3. AddTransient --> let is say even in one request if that object is accessed like 10 times so, it will create 10 differnrt objects
 // we implement the below code to implement log for the endpoints
-builder.Services.AddSingleton<ILogging, Logging>();
+builder.Services.AddSingleton<ILogging, Logging2>();
 
 var app = builder.Build();
 
