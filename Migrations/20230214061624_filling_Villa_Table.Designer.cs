@@ -4,6 +4,7 @@ using MagicVilla_VillaAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicVillaVillaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230214061624_filling_Villa_Table")]
+    partial class fillingVillaTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +73,7 @@ namespace MagicVillaVillaAPI.Migrations
                         {
                             Id = 1,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 2, 14, 9, 20, 9, 69, DateTimeKind.Local).AddTicks(2705),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 lea, sda massa auctor sit amt, Donec ex, Fusce 11 lea, sda massa auctor sit amt, Donec ex",
                             ImageUrl = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/a2/e8/3a/royal-villa.jpg?w=700&h=-1&s=1",
                             Name = "Royal Villa",
@@ -83,7 +86,7 @@ namespace MagicVillaVillaAPI.Migrations
                         {
                             Id = 2,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 2, 14, 9, 20, 9, 69, DateTimeKind.Local).AddTicks(2717),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 lea, sda massa auctor sit amt, Donec ex, Fusce 11 lea, sda massa auctor sit amt, Donec ex",
                             ImageUrl = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/a2/e8/3a/royal-villa.jpg?w=700&h=-1&s=1",
                             Name = "Diamond Villa",
@@ -96,7 +99,7 @@ namespace MagicVillaVillaAPI.Migrations
                         {
                             Id = 3,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 2, 14, 9, 20, 9, 69, DateTimeKind.Local).AddTicks(2718),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 lea, sda massa auctor sit amt, Donec ex, Fusce 11 lea, sda massa auctor sit amt, Donec ex",
                             ImageUrl = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/a2/e8/3a/royal-villa.jpg?w=700&h=-1&s=1",
                             Name = "Diamond Pool Villa",
@@ -109,7 +112,7 @@ namespace MagicVillaVillaAPI.Migrations
                         {
                             Id = 4,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 2, 14, 9, 20, 9, 69, DateTimeKind.Local).AddTicks(2720),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 lea, sda massa auctor sit amt, Donec ex, Fusce 11 lea, sda massa auctor sit amt, Donec ex",
                             ImageUrl = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/a2/e8/3a/royal-villa.jpg?w=700&h=-1&s=1",
                             Name = "Royal Pool Villa",
@@ -122,7 +125,7 @@ namespace MagicVillaVillaAPI.Migrations
                         {
                             Id = 5,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 2, 14, 9, 20, 9, 69, DateTimeKind.Local).AddTicks(2721),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 lea, sda massa auctor sit amt, Donec ex, Fusce 11 lea, sda massa auctor sit amt, Donec ex",
                             ImageUrl = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/a2/e8/3a/royal-villa.jpg?w=700&h=-1&s=1",
                             Name = "Palace",
