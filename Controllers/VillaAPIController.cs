@@ -206,15 +206,27 @@ namespace MagicVilla_VillaAPI.Controllers
                 Amenity = villa.Amenity,
                 Details = villa.Details,
                 ImageUrl = villa.ImageUrl,
-                Id= villa.Id,
-                Name= villa.Name,
-                Occupancy= villa.Occupancy,
+                Id = villa.Id,
+                Name = villa.Name,
+                Occupancy = villa.Occupancy,
                 Rate = villa.Rate,
                 Sqft = villa.Sqft,
             };
 
             patchDTO.ApplyTo(villaDTO, ModelState);
-            
+            Villa model = new Villa()
+            {
+                Id = villaDTO.Id,
+                Name = villaDTO.Name,
+                Amenity = villaDTO.Amenity,
+                Details = villaDTO.Details,
+                ImageUrl = villaDTO.ImageUrl,
+                Occupancy = villaDTO.Occupancy,
+                Rate = villaDTO.Rate,
+                Sqft = villaDTO.Sqft,
+            };
+            _db.Villas.Update(model);
+            _db.SaveChanges();
             return NoContent();
         }
     }
