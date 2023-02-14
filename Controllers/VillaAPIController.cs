@@ -4,6 +4,7 @@ using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.dto;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
@@ -19,16 +20,13 @@ namespace MagicVilla_VillaAPI.Controllers
         private readonly ILogging _logger;
         private readonly ApplicationDbContext _db;
 
-        public VillaAPIController(ILogging logger)
-        {
-            _logger = logger;
-        }
         // we connect ApplicationDbContext to the container in Progra.cs
         // so Using DI will extract Db
         // Using Dependecy Inversion will connect the API With SQL Server
         // so the Data to be persistent
-        public VillaAPIController(ApplicationDbContext db)
+        public VillaAPIController(ILogging logger, ApplicationDbContext db)
         {
+            _logger = logger;
             _db = db;
         }
 
@@ -192,7 +190,8 @@ namespace MagicVilla_VillaAPI.Controllers
                 return BadRequest();
             }
             //find which villa wants to update
-            var villa = _db.Villas.FirstOrDefault(v => v.Id == id);
+            // AsNoTracking --> used to ignore the result of this since make an error when test Patch end point
+            var villa = _db.Villas.AsNoTracking().FirstOrDefault(v => v.Id == id);
             if (villa == null)
             {
                 return NotFound();
